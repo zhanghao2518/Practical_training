@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tju.practical.dao.AttendanceDao">
+
+    <resultMap type="com.tju.practical.entity.Attendance" id="AttendanceMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="flowerName" column="flower_name" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="attendTime" column="attend_time" jdbcType="VARCHAR"/>
+        <result property="abnormal" column="abnormal" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AttendanceMap">
+        select
+          id, flower_name, name, attend_time, abnormal
+        from practical.attendance
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AttendanceMap">
+        select
+          id, flower_name, name, attend_time, abnormal
+        from practical.attendance
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="AttendanceMap">
+        select
+          id, flower_name, name, attend_time, abnormal
+        from practical.attendance
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="flowerName != null and flowerName != ''">
+                and flower_name = #{flowerName}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="attendTime != null and attendTime != ''">
+                and attend_time = #{attendTime}
+            </if>
+            <if test="abnormal != null">
+                and abnormal = #{abnormal}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into practical.attendance(flower_name, name, attend_time, abnormal)
+        values (#{flowerName}, #{name}, #{attendTime}, #{abnormal})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update practical.attendance
+        <set>
+            <if test="flowerName != null and flowerName != ''">
+                flower_name = #{flowerName},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="attendTime != null and attendTime != ''">
+                attend_time = #{attendTime},
+            </if>
+            <if test="abnormal != null">
+                abnormal = #{abnormal},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from practical.attendance where id = #{id}
+    </delete>
+
+</mapper>
