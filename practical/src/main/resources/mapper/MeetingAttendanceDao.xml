@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tju.practical.dao.MeetingAttendanceDao">
+
+    <resultMap type="com.tju.practical.entity.MeetingAttendance" id="MeetingAttendanceMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="flowerName" column="flower_name" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="attendTime" column="attend_time" jdbcType="VARCHAR"/>
+        <result property="abnormal" column="abnormal" jdbcType="INTEGER"/>
+        <result property="mid" column="mid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MeetingAttendanceMap">
+        select
+          id, flower_name, name, attend_time, abnormal, mid
+        from practical.meeting_attendance
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MeetingAttendanceMap">
+        select
+          id, flower_name, name, attend_time, abnormal, mid
+        from practical.meeting_attendance
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MeetingAttendanceMap">
+        select
+          id, flower_name, name, attend_time, abnormal, mid
+        from practical.meeting_attendance
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="flowerName != null and flowerName != ''">
+                and flower_name = #{flowerName}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="attendTime != null and attendTime != ''">
+                and attend_time = #{attendTime}
+            </if>
+            <if test="abnormal != null">
+                and abnormal = #{abnormal}
+            </if>
+            <if test="mid != null">
+                and mid = #{mid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into practical.meeting_attendance(flower_name, name, attend_time, abnormal, mid)
+        values (#{flowerName}, #{name}, #{attendTime}, #{abnormal}, #{mid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update practical.meeting_attendance
+        <set>
+            <if test="flowerName != null and flowerName != ''">
+                flower_name = #{flowerName},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="attendTime != null and attendTime != ''">
+                attend_time = #{attendTime},
+            </if>
+            <if test="abnormal != null">
+                abnormal = #{abnormal},
+            </if>
+            <if test="mid != null">
+                mid = #{mid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from practical.meeting_attendance where id = #{id}
+    </delete>
+
+</mapper>

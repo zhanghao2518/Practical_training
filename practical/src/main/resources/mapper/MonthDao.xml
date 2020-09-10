@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tju.practical.dao.MonthDao">
+
+    <resultMap type="com.tju.practical.entity.Month" id="MonthMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="flowerName" column="flower_name" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="normalAttend" column="normal_attend" jdbcType="INTEGER"/>
+        <result property="abnormalAttend" column="abnormal_attend" jdbcType="INTEGER"/>
+        <result property="paidVacation" column="paid_vacation" jdbcType="INTEGER"/>
+        <result property="unpaidVacation" column="unpaid_vacation" jdbcType="INTEGER"/>
+        <result property="businessTravel" column="business_travel" jdbcType="INTEGER"/>
+        <result property="workOvertime" column="work_overtime" jdbcType="INTEGER"/>
+        <result property="salary" column="salary" jdbcType="NUMERIC"/>
+        <result property="time" column="time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MonthMap">
+        select
+          id, flower_name, name, normal_attend, abnormal_attend, paid_vacation, unpaid_vacation, business_travel, work_overtime, salary, time
+        from practical.month
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MonthMap">
+        select
+          id, flower_name, name, normal_attend, abnormal_attend, paid_vacation, unpaid_vacation, business_travel, work_overtime, salary, time
+        from practical.month
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MonthMap">
+        select
+          id, flower_name, name, normal_attend, abnormal_attend, paid_vacation, unpaid_vacation, business_travel, work_overtime, salary, time
+        from practical.month
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="flowerName != null and flowerName != ''">
+                and flower_name = #{flowerName}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="normalAttend != null">
+                and normal_attend = #{normalAttend}
+            </if>
+            <if test="abnormalAttend != null">
+                and abnormal_attend = #{abnormalAttend}
+            </if>
+            <if test="paidVacation != null">
+                and paid_vacation = #{paidVacation}
+            </if>
+            <if test="unpaidVacation != null">
+                and unpaid_vacation = #{unpaidVacation}
+            </if>
+            <if test="businessTravel != null">
+                and business_travel = #{businessTravel}
+            </if>
+            <if test="workOvertime != null">
+                and work_overtime = #{workOvertime}
+            </if>
+            <if test="salary != null">
+                and salary = #{salary}
+            </if>
+            <if test="time != null and time != ''">
+                and time = #{time}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into practical.month(flower_name, name, normal_attend, abnormal_attend, paid_vacation, unpaid_vacation, business_travel, work_overtime, salary, time)
+        values (#{flowerName}, #{name}, #{normalAttend}, #{abnormalAttend}, #{paidVacation}, #{unpaidVacation}, #{businessTravel}, #{workOvertime}, #{salary}, #{time})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update practical.month
+        <set>
+            <if test="flowerName != null and flowerName != ''">
+                flower_name = #{flowerName},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="normalAttend != null">
+                normal_attend = #{normalAttend},
+            </if>
+            <if test="abnormalAttend != null">
+                abnormal_attend = #{abnormalAttend},
+            </if>
+            <if test="paidVacation != null">
+                paid_vacation = #{paidVacation},
+            </if>
+            <if test="unpaidVacation != null">
+                unpaid_vacation = #{unpaidVacation},
+            </if>
+            <if test="businessTravel != null">
+                business_travel = #{businessTravel},
+            </if>
+            <if test="workOvertime != null">
+                work_overtime = #{workOvertime},
+            </if>
+            <if test="salary != null">
+                salary = #{salary},
+            </if>
+            <if test="time != null and time != ''">
+                time = #{time},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from practical.month where id = #{id}
+    </delete>
+
+</mapper>

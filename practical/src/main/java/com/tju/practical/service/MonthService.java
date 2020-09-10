@@ -1,25 +1,25 @@
 package com.tju.practical.service;
 
 import com.github.pagehelper.PageInfo;
-import com.tju.practical.entity.Meeting;
+import com.tju.practical.entity.Month;
 import java.util.List;
 
 /**
- * (Meeting)表服务接口
+ * (Month)表服务接口
  *
  * @author makejava
- * @since 2020-09-07 16:16:01
+ * @since 2020-09-07 23:59:35
  */
-public interface MeetingService {
+public interface MonthService {
 
-    PageInfo<Meeting> queryAll(String name,Integer pageNum,Integer pageSize);
+    PageInfo<Month> queryAll(String flowerName,String date,Integer pageNum,Integer pageSize);
     /**
      * 通过ID查询单条数据
      *
      * @param id 主键
      * @return 实例对象
      */
-    Meeting queryById(Integer id);
+    Month queryById(Integer id);
 
     /**
      * 查询多条数据
@@ -28,23 +28,23 @@ public interface MeetingService {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Meeting> queryAllByLimit(int offset, int limit);
+    List<Month> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param meeting 实例对象
+     * @param id 实例对象
      * @return 实例对象
      */
-    Meeting insert(Meeting meeting);
+    Month insert(Integer id,Double salary,String date);
 
     /**
      * 修改数据
      *
-     * @param meeting 实例对象
+     * @param id 实例对象
      * @return 实例对象
      */
-    Meeting update(Meeting meeting);
+    Month update(Integer id,Double salary);
 
     /**
      * 通过主键删除数据
