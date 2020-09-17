@@ -99,6 +99,7 @@ public class MeetingAttendanceServiceImpl implements MeetingAttendanceService {
         String time = dateFormat.format(calendar.getTime());//记录打卡时间
         meetingAttendance.setAttendTime(time);
         meetingAttendance.setAbnormal(time.compareTo(meeting.getStartTime()) > 0 ? 1 : 0);
+        meetingAttendance.setMid(mid);
         this.meetingAttendanceDao.insert(meetingAttendance);
         return this.meetingAttendanceDao.queryAll(meetingAttendance).get(0);
     }

@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
         user.setMail(StringUtils.isEmpty(userRequest.getMail()) ? user.getMail() : userRequest.getMail());
         user.setPassword(StringUtils.isEmpty(userRequest.getPassword()) ? user.getPassword() : userRequest.getPassword());
         user.setAge(StringUtils.isEmpty(userRequest.getAge()) ? user.getAge() : userRequest.getAge());
-        user.setGrade(StringUtils.isEmpty(userRequest.getGrade()) ? user.getGender() : userRequest.getGrade());
+        user.setGrade(StringUtils.isEmpty(userRequest.getGrade()) ? user.getGrade() : userRequest.getGrade());
 
         this.userDao.update(user);
         return this.queryById(user.getId());
